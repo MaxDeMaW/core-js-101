@@ -6,7 +6,6 @@
  *                                                                                           *
  ******************************************************************************************* */
 
-
 /**
  * Parses a rfc2822 string date representation into date value
  * For rfc2822 date specification refer to : http://tools.ietf.org/html/rfc2822#page-14
@@ -19,8 +18,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,10 +33,9 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value);
 }
-
 
 /**
  * Returns true if specified date is leap year and false otherwise
@@ -53,10 +51,18 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  let isLeap = true;
+  const checkingYear = date.getFullYear();
+  if (checkingYear % 4 !== 0) {
+    isLeap = false;
+  } else if (checkingYear % 100 !== 0) {
+    isLeap = true;
+  } else if (checkingYear % 400 !== 0) {
+    isLeap = false;
+  }
+  return isLeap;
 }
-
 
 /**
  * Returns the string represention of the timespan between two dates.
@@ -77,7 +83,6 @@ function timeSpanToString(/* startDate, endDate */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns the angle (in radians) between the hands of an analog clock
  * for the specified Greenwich time.
@@ -92,10 +97,18 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  // Equation for the angle between the hands = 0.5 * (60 * Hour - 11* Minutes)
+  let subtract = 0;
+  const angleBetweenClock = 0.5 * (60 * (date.getUTCHours() % 12) - 11 * date.getUTCMinutes());
+  // If the angle is greater than 180 degrees then subtract it from 360 degrees.
+  if (Math.abs(angleBetweenClock) > 180) {
+    subtract = (Math.abs(360 - angleBetweenClock) * (Math.PI / 180));
+  } else {
+    subtract = (Math.abs(angleBetweenClock) * (Math.PI / 180));
+  }
+  return subtract;
 }
-
 
 module.exports = {
   parseDataFromRfc2822,
