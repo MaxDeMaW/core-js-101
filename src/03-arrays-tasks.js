@@ -311,8 +311,8 @@ function get3TopItems(arr) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  return arr.filter((element) => typeof element === 'number' && element > 0).length;
 }
 
 /**
@@ -458,8 +458,16 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const matrix = [];
+  const fArray = new Array(n).fill(0);
+  fArray.map((element, index) => {
+    const y = new Array(n).fill(0);
+    y[index] = 1;
+    matrix.push(y);
+    return element;
+  });
+  return matrix;
 }
 
 /**
