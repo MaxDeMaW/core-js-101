@@ -203,8 +203,22 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const parts = {
+    empty: ' ',
+    horizontalLine: '─',
+    leftTopCorner: '┌',
+    rightTopCorner: '┐',
+    verticalLine: '│',
+    leftBottomCorner: '└',
+    rightBottomCorner: '┘',
+
+  };
+  const top = `${parts.leftTopCorner}${parts.horizontalLine.repeat(width - 2)}${parts.rightTopCorner}\n`;
+  const middleElement = `${parts.verticalLine}${parts.empty.repeat(width - 2)}${parts.verticalLine}\n`;
+  const middle = middleElement.repeat(height - 2);
+  const bottom = `${parts.leftBottomCorner}${parts.horizontalLine.repeat(width - 2)}${parts.rightBottomCorner}\n`;
+  return top + middle + bottom;
 }
 
 
@@ -224,8 +238,11 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const bias = 13;
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const charBias = alphabet[bias - 1];
+  return str.replace(/[A-Za-z]/g, (char) => String.fromCharCode(char.charCodeAt(0) + (char.toUpperCase() <= charBias ? bias : -(bias))));
 }
 
 /**

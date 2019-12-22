@@ -111,8 +111,11 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const deltaX = x1 - x2;
+  const deltaY = y1 - y2;
+
+  return Math.atan2(Math.abs(deltaY), Math.abs(deltaX)) * 2;
 }
 
 /**
@@ -222,8 +225,13 @@ function isPrime(/* n */) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  let result = +value;
+  // eslint-disable-next-line no-restricted-globals
+  if (!isFinite(value)) {
+    result = def;
+  }
+  return result;
 }
 
 module.exports = {
